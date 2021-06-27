@@ -2,9 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
+
+func init() {
+	//Check ENV variables.
+	envChecks()
+}
 
 func main() {
 	app := fiber.New()
@@ -39,5 +46,13 @@ func main() {
 		return c.SendString(msg) // => ✋ register
 	})
 
-	app.Listen(":3000")
+	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
+}
+
+func envChecks() {
+	port, portExist := os.LookupEnv("PORT")
+
+	if !portExist || port == "" {
+		log.Fatal("PORT must be set in .env and not empty")
+	}
 }
