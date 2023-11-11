@@ -20,6 +20,10 @@ func main() {
 		return c.SendString("Hello, World 👋!")
 	})
 
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusAlreadyReported).SendString("healthy 👋!")
+	})
+
 	// == Basic Routing
 
 	// GET /hi/john
