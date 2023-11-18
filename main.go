@@ -20,6 +20,13 @@ func main() {
 		return c.SendString("Hello, World 👋!")
 	})
 
+	app.Get("/crashit", func(c *fiber.Ctx) error {
+		var m map[string]int
+		// use before allocate
+		m["a"] = 1
+		return c.SendString("Not reached!")
+	})
+
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusAlreadyReported).SendString("healthy 👋!")
 	})
