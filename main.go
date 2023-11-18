@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 func init() {
@@ -15,6 +16,11 @@ func init() {
 
 func main() {
 	app := fiber.New()
+
+	// https://docs.gofiber.io/api/middleware/recover/
+	// using default config
+	//app.Use(recover.New())
+	app.Use(recover.New(recover.Config{EnableStackTrace: true}))
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
